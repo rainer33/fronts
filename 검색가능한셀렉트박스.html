@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색 가능한 셀렉트 박스</title>
+    <style>
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+        }
+
+        .custom-select input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .custom-select ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 1px solid #ccc;
+            background: white;
+            max-height: 150px;
+            overflow-y: auto;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: none;
+        }
+
+        .custom-select ul li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .custom-select ul li:hover {
+            background: #f0f0f0;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-select">
+        <input type="text" placeholder="검색..." id="searchInput">
+        <ul id="dropdownList">
+            <!-- 목록 아이템이 동적으로 추가됩니다 -->
+        </ul>
+        <select id="originalSelect" class="hidden">
+            <option value="1">Apple</option>
+            <option value="2">Banana</option>
+            <option value="3">Cherry</option>
+            <option value="4">Date</option>
+            <option value="5">Elderberry</option>
+            <option value="6">Fig</option>
+            <option value="7">Grape</option>
+        </select>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const $originalSelect = $('#originalSelect');
+            const $dropdownList = $('#dropdownList');
+            const $searchInput = $('#searchInput');
+
+            // 초기화: select 옵션을 dropdown에 렌더링
+            $originalSelect.find('option').each(function () {
+                const value = $(this).val();
+                const text = $(this).text();
+                $dropdownList.append(`<li data-value="${value}">${text}</li>`);
+            });
+
+            // 검색 입력 이벤트
+            $searchInput.on('input', function () {
+                const query = $(this).val().toLowerCase();
+                $dropdownList.find('li').each(function () {
+                    const text = $(this).text().toLowerCase();
+                    if (text.includes(query)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+                $dropdownList.show();
+            });
+
+            // 아이템 클릭 이벤트
+            $dropdownList.on('click', 'li', function () {
+                const value = $(this).data('value');
+                const text = $(this).text();
+
+                // 검색창에 선택한 값 표시
+                $searchInput.val(text);
+
+                // 실제 select 값 변경
+                $originalSelect.val(value);
+
+                // 드롭다운 숨기기
+                $dropdownList.hide();
+            });
+
+            // 검색창 포커스가 해제되면 드롭다운 숨기기
+            $searchInput.on('blur', function () {
+                setTimeout(() => {
+                    $dropdownList.hide();
+                }, 200); // 클릭 이벤트 처리 시간을 주기 위해 딜레이 추가
+            });
+
+            // 검색창 클릭 시 드롭다운 표시
+            $searchInput.on('focus', function () {
+                $dropdownList.show();
+            });
+        });
+    </script>
+</body>
+</html>
