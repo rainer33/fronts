@@ -118,6 +118,67 @@
                 $dropdownList.show();
             });
         });
+
+        
+/* function selectInstt() {
+    $.ajax({
+        type: 'GET',
+        url: '/marineEnvInfo/insttList.json',
+        success: function (data) {
+            initializeSearchableDropdown('txtReqInsttCd', 'reqInsttDropdown', data);
+        },
+    });
+} */
+
+/* function initializeSearchableDropdown(inputId, dropdownId, data) {
+    const $input = $('#'+inputId);
+    const $dropdown = $('#'+dropdownId);
+    
+ // 드롭다운 높이 및 스타일 동적 설정
+    $dropdown.css({
+        "max-height": "1200px", // 원하는 높이로 조절
+        "overflow-y": "auto", // 스크롤 활성화
+        "border": "1px solid #ccc",
+        "padding": "5px", // 선택지 간격 추가
+        "z-index": "1000", // 드롭다운이 다른 요소 위로 보이도록
+        "position": "absolute", // 위치 고정
+        "background-color": "white" // 배경색 설정
+    });
+    // 초기화: 목록 추가
+    $dropdown.empty();
+    $.each(data, function (index, item) {
+        $dropdown.append('<li data-value="'+item.insttId+'">' +item.insttNm+'</li>');
+    });
+
+    // 검색 입력 이벤트
+    $input.on('input', function () {
+        const query = $(this).val().toLowerCase();
+        $dropdown.find('li').each(function () {
+            const text = $(this).text().toLowerCase();
+            $(this).toggle(text.includes(query));
+        });
+        $dropdown.show();
+    });
+
+    // 옵션 선택 이벤트
+    $dropdown.on('click', 'li', function () {
+        const value = $(this).data('value');
+        const text = $(this).text();
+        $input.val(text);
+        $dropdown.hide();
+    });
+
+    // 포커스가 해제되면 드롭다운 숨김
+    $input.on('blur', function () {
+        setTimeout(() => $dropdown.hide(), 200); // 클릭 이벤트 처리 딜레이
+    });
+
+    // 포커스 시 드롭다운 표시
+    $input.on('focus', function () {
+        $dropdown.show();
+    });
+}
+ */
     </script>
 </body>
 </html>
