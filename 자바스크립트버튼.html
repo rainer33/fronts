@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Button</title>
+    <title>Rounded Button Example</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h2>Dynamic Button Example</h2>
+    <h2>Dynamic Rounded Button</h2>
     <canvas id="buttonCanvas" width="200" height="100"></canvas>
     <br>
     <label for="labelInput">Change Label:</label>
@@ -28,6 +28,7 @@
             const buttonHeight = 50;
             const buttonX = 25;
             const buttonY = 25;
+            const borderRadius = 15; // Radius for rounded corners
             let buttonColor = "#ff0000"; // Default red color
             let buttonLabel = "Click Me!";
 
@@ -36,14 +37,27 @@
                 // Clear canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // Draw button
+                // Draw rounded button
+                ctx.beginPath();
+                ctx.moveTo(buttonX + borderRadius, buttonY);
+                ctx.lineTo(buttonX + buttonWidth - borderRadius, buttonY);
+                ctx.arcTo(buttonX + buttonWidth, buttonY, buttonX + buttonWidth, buttonY + borderRadius, borderRadius);
+                ctx.lineTo(buttonX + buttonWidth, buttonY + buttonHeight - borderRadius);
+                ctx.arcTo(buttonX + buttonWidth, buttonY + buttonHeight, buttonX + buttonWidth - borderRadius, buttonY + buttonHeight, borderRadius);
+                ctx.lineTo(buttonX + borderRadius, buttonY + buttonHeight);
+                ctx.arcTo(buttonX, buttonY + buttonHeight, buttonX, buttonY + buttonHeight - borderRadius, borderRadius);
+                ctx.lineTo(buttonX, buttonY + borderRadius);
+                ctx.arcTo(buttonX, buttonY, buttonX + borderRadius, buttonY, borderRadius);
+                ctx.closePath();
+
+                // Fill button color
                 ctx.fillStyle = buttonColor;
-                ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+                ctx.fill();
 
                 // Draw button border
                 ctx.strokeStyle = "#000";
-                ctx.lineWidth = 2;
-                ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
+                ctx.lineWidth = 0;
+                ctx.stroke();
 
                 // Draw button label
                 ctx.font = "20px Arial";
