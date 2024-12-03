@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Color Manipulation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Original Image</h2>
+    <img id="originalImage" src="step-all.png" alt="Sample Image" style="max-width: 100%; height: auto;">
+
+    <h2>Manipulated Image</h2>
+    <canvas id="imageCanvas"></canvas>
+    <br>
+    <button id="manipulateColor">Change Color</button>
+
+    <script>
+        $(document).ready(function () {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            const img = document.getElementById('originalImage');
+
+            // Ensure the image is fully loaded before drawing
+            img.onload = function () {
+                // Set canvas size to match the image
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                // Draw the original image onto the canvas
+                ctx.drawImage(img, 0, 0);
+            };
+
+            // Handle color manipulation button
+            $('#manipulateColor').on('click', function () {
+                // Ensure the image has been drawn on the canvas
+                if (canvas.width === 0 || canvas.height === 0) {
+                    alert("Image is not loaded yet!");
+                    return;
+                }
+
+                // Get image data from the canvas
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+
+                // Manipulate pixel colors
+                for (let i = 0; i < data.length; i += 4) {
+                    // RGBA values
+                    const red = data[i];
+                    const green = data[i + 1];
+                    const blue = data[i + 2];
+
+                    // Example: Apply a simple blue filter
+                    data[i] = blue;      // Set red to blue
+                    data[i + 1] = red;   // Set green to red
+                    data[i + 2] = green; // Set blue to green
+                }
+
+                // Put the manipulated image data back onto the canvas
+                ctx.putImageData(imageData, 0, 0);
+            });
+        });
+    </script>
+</body>
+</html>

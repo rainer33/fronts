@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Button</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Dynamic Button Example</h2>
+    <canvas id="buttonCanvas" width="200" height="100"></canvas>
+    <br>
+    <label for="labelInput">Change Label:</label>
+    <input type="text" id="labelInput" placeholder="Enter new label">
+    <button id="changeLabel">Change Label</button>
+    <br><br>
+    <label for="colorInput">Change Color:</label>
+    <input type="color" id="colorInput" value="#ff0000">
+    <button id="changeColor">Change Color</button>
+
+    <script>
+        $(document).ready(function () {
+            const canvas = document.getElementById('buttonCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Button settings
+            const buttonWidth = 150;
+            const buttonHeight = 50;
+            const buttonX = 25;
+            const buttonY = 25;
+            let buttonColor = "#ff0000"; // Default red color
+            let buttonLabel = "Click Me!";
+
+            // Draw initial button
+            function drawButton() {
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw button
+                ctx.fillStyle = buttonColor;
+                ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+                // Draw button border
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+                ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
+
+                // Draw button label
+                ctx.font = "20px Arial";
+                ctx.fillStyle = "#fff"; // White text
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(buttonLabel, buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+            }
+
+            // Initial draw
+            drawButton();
+
+            // Change button label
+            $('#changeLabel').on('click', function () {
+                const newLabel = $('#labelInput').val();
+                if (newLabel) {
+                    buttonLabel = newLabel;
+                    drawButton();
+                }
+            });
+
+            // Change button color
+            $('#changeColor').on('click', function () {
+                const newColor = $('#colorInput').val();
+                if (newColor) {
+                    buttonColor = newColor;
+                    drawButton();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
