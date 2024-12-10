@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shape Effect</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .shape {
+      width: 300px;
+      height: 100px;
+      background: linear-gradient(to right, #7a7a7a, #6a6a6a);
+      border-radius: 50px / 25px; /* 비율을 조정하여 굴곡 효과 */
+      box-shadow: inset 10px 0 15px rgba(0, 0, 0, 0.3),
+                  inset -10px 0 15px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="shape"></div>
+</body>
+</html>
